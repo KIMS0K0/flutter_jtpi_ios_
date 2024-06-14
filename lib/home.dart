@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> myTabs = [
     MyTab(iconData: Icons.search, text: '검색'),
-    MyTab(iconData: Icons.star_border, text: '즐겨찾기'),
+    MyTab(iconData: Icons.star_border_rounded, text: '즐겨찾기'),
   ];
 
   void initState() {

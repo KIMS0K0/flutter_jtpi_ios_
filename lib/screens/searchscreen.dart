@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jtpi/home.dart';
 import 'package:jtpi/screens/filterscreen.dart';
 import 'package:jtpi/screens/passinfoscreen.dart';
@@ -24,7 +25,7 @@ class searchscreen extends StatefulWidget {
 class _searchscreenState extends State<searchscreen> {
   List<Widget> myTabs = [
     const MyTab(iconData: Icons.search, text: '검색'),
-    const MyTab(iconData: Icons.star_border, text: '즐겨찾기'),
+    const MyTab(iconData: Icons.star_outline_rounded, text: '즐겨찾기'),
   ];
   String _sortBy = '기본순';
   String? selectedValue = '기본순';
@@ -142,9 +143,7 @@ class _searchscreenState extends State<searchscreen> {
     SearchParameters[0].quantityAdults = widget.searchparameter.quantityAdults;
     SearchParameters[0].quantityChildren = widget.searchparameter.quantityChildren;
 
-    if (widget.searchparameter.query == '0') _searchText = '';
-    _performSearch(); // 초기 검색 수행
-    _getbookmark();
+    if (widget.screennumber == 2) _handleSort('기본순');
   }
 
 
@@ -316,9 +315,7 @@ class _searchscreenState extends State<searchscreen> {
                           SearchParameters[0].quantityAdults = 0;
                           SearchParameters[0].quantityChildren = 0;
                           _handleSort('기본순');
-                          //_performSearch(); // 엔터키를 누르면 검색 수행
                           _getbookmark();
-                          print('누름');
                         },
                       ),
                     ),
@@ -515,11 +512,8 @@ class _searchscreenState extends State<searchscreen> {
                                       builder: (context) => passinfoscreen(passID: _filteredPassDetailInfo[index].passid),
                                     ),
                                   ).then((value) {
-                                    print(selectedValue);
-                                    //_performSearch();
                                     _getbookmark();
                                     _handleSort(selectedValue.toString());
-                                    //initState();
                                   });
                                 },
                                 child: Padding(
@@ -536,9 +530,10 @@ class _searchscreenState extends State<searchscreen> {
                                             Container(
                                               height: (MediaQuery.of(context).size.width - 48)/2,
                                               decoration: BoxDecoration(
+                                                color: Colors.white,
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.black.withOpacity(0.08), // 그림자 색상
+                                                    color: Colors.black.withOpacity(0.03),
                                                     spreadRadius: 2, // 그림자 퍼짐 반경
                                                     blurRadius: 3, // 그림자 흐림 정도
                                                     offset: Offset(0, 0), // 그림자 위치 (x, y)
@@ -558,6 +553,7 @@ class _searchscreenState extends State<searchscreen> {
                                                     icon: Icon(
                                                       bookmarked.contains(id.toString()) ? Icons.star_rounded : Icons.star_border_rounded,
                                                       color: bookmarked.contains(id.toString()) ? Colors.amber : Colors.white,
+                                                      shadows: <Shadow>[Shadow(color: Colors.grey.shade500 , blurRadius: 2.0)],
                                                     ),
                                                     iconSize: 40,
                                                     onPressed: () {
@@ -624,7 +620,7 @@ class _searchscreenState extends State<searchscreen> {
                                                   ),
                                                   SizedBox(height: 2),
                                                   Text(
-                                                    price + ' 엔',
+                                                    NumberFormat('#,###').format(double.parse(price)) + ' 엔',
                                                     softWrap: true,
                                                     maxLines: 1,
                                                     overflow: TextOverflow.ellipsis,
