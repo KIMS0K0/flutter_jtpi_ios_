@@ -248,8 +248,13 @@ class _passinfoscreenState extends State<passinfoscreen> with SingleTickerProvid
         );
         break;
       case 4:
+        renderBox = _refundKey.currentContext!.findRenderObject() as RenderBox;
+        position = renderBox.localToGlobal(
+            Offset.zero, ancestor: _rootKey.currentContext!.findRenderObject());
         _scrollController.animateTo(
-          MediaQuery.of(context).size.height,
+          _scrollController.offset + position.dy -
+              AppBar().preferredSize.height -
+              (_showTabBar ? kTextTabBarHeight : 0) + h + 150,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );

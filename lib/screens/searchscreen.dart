@@ -161,19 +161,20 @@ class _searchscreenState extends State<searchscreen> {
   }
 
   Future<void> _performSearch() async {
-    print('B');
     if (SearchParameters[0].query == '') {SearchParameters[0].query = '0'; print('C');}
     if (_searchText.isNotEmpty || widget.screennumber == 2) {
       print('D');
       List<PassSearchResult> results = await _search(_searchText);
       setState(() {
         _filteredPassDetailInfo = results;
+        print(_filteredPassDetailInfo.length);
       });
     } else {
       setState(() {
         _filteredPassDetailInfo = [];
       });
     }
+    _getbookmark();
   }
 
   void _handleTabSelection(int index) {
@@ -223,7 +224,7 @@ class _searchscreenState extends State<searchscreen> {
             SearchParameters[0].cityNames = '0';
             SearchParameters[0].period = 0;
             SearchParameters[0].minPrice = 0;
-            SearchParameters[0].maxPrice =0;
+            SearchParameters[0].maxPrice = 30000;
             SearchParameters[0].quantityAdults = 0;
             SearchParameters[0].quantityChildren = 0;
             if(SearchParameters[0].query == '') {
@@ -305,6 +306,7 @@ class _searchscreenState extends State<searchscreen> {
                           ),
                         ),
                         onSubmitted: (value) {
+                          print("abc");
                           selectedValue = '기본순';
                           SearchParameters[0].query = _searchText;
                           SearchParameters[0].departureCity = '0';
@@ -312,6 +314,8 @@ class _searchscreenState extends State<searchscreen> {
                           SearchParameters[0].transportType = '0';
                           SearchParameters[0].cityNames = '0';
                           SearchParameters[0].period = 0;
+                          SearchParameters[0].minPrice = 400;
+                          SearchParameters[0].maxPrice = 30000;
                           SearchParameters[0].quantityAdults = 0;
                           SearchParameters[0].quantityChildren = 0;
                           _handleSort('기본순');

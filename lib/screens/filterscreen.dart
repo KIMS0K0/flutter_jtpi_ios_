@@ -141,7 +141,7 @@ class _filterscreenState extends State<filterscreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) =>
-                        searchscreen(searchparameter: SearchParameters[0], screennumber: 2,)),
+                        searchscreen(searchparameter: SearchParameters[0], screennumber: 3,)),
                   );
                 } else {
                   Navigator.pushReplacement(
